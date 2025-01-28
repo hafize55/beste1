@@ -3,141 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine's Day Card</title>
+  <title>Valentine's Card</title>
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background-color: #ffe6f2;
+      overflow: hidden;
+      background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fphotos%2Fspring-meadow.html&psig=AOvVaw3gpBUIxy-v1H5E7V4kHbNf&ust=1738109870264000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODv0oOSl4sDFQAAAAAdAAAAABAE') no-repeat center center;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
+      transition: background 1s ease;
     }
 
-    .card {
-      width: 300px;
-      height: 400px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    #scene {
+      position: relative;
       text-align: center;
-      padding: 20px;
-      transform: scale(0);
-      transition: transform 0.5s ease;
     }
 
-    .card h1 {
-      color: #ff4d88;
-    }
-
-    .heart {
-      color: #ff4d88;
-      font-size: 50px;
+    .apple {
+      width: 150px;
+      position: relative;
       animation: bounce 1s infinite alternate;
+      cursor: pointer;
     }
 
-    .hidden-message {
+    .knife {
+      width: 100px;
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .text {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #finalScene {
+      display: none;
+      text-align: center;
+    }
+
+    .message {
+      font-size: 36px;
+      color: red;
+      margin: 20px;
+    }
+
+    .yes-button {
+      display: inline-block;
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .yes-button:hover {
+      transform: scale(1.1);
+    }
+
+    .hidden-pic {
       display: none;
       margin-top: 20px;
-      font-size: 18px;
-      color: #333;
-    }
-
-    .button {
-      background-color: #ff4d88;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .button:hover {
-      background-color: #ff3366;
     }
 
     @keyframes bounce {
-      0% {
+      from {
         transform: translateY(0);
       }
-      100% {
+      to {
         transform: translateY(-10px);
-      }
-    }
-
-    .hearts {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .heart-animation {
-      position: absolute;
-      animation: floatUp 4s ease-in infinite;
-      opacity: 0;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-300px) scale(0.5);
-        opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-
-  <div id="welcome">
-    <button class="button" onclick="openCard()">Open Your Valentine</button>
+  <div id="scene">
+    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dreamstime.com%2Fphotos-images%2Falphonso-mango.html&psig=AOvVaw21O-gWqKG4hd1qZRIvINa5&ust=1738109980269000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjyxbySl4sDFQAAAAAdAAAAABAE="Apple" class="apple" id="apple">
+    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fknife&psig=AOvVaw3hufNqlbToqv8GjjfhB3jq&ust=1738110105509000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKiBq-2Sl4sDFQAAAAAdAAAAABAE" alt="Knife" class="knife" id="knife">
+    <div class="text">Chop the Apple</div>
   </div>
 
-  <div class="card" id="card">
-    <h1>Will You Be My Valentine? 💕</h1>
-    <div class="heart">❤️</div>
-    <p class="hidden-message" id="hiddenMessage">I can't wait to spend time with you, even from afar. 💌</p>
-    <button class="button" onclick="revealMessage()">Click to Reveal the Message</button>
+  <div id="finalScene">
+    <div class="message">Be My Valentine?</div>
+    <button class="yes-button" id="yesButton">Yes</button>
+    <img src="https://imgur.com/a/2HuDB11" alt="Couple Photo" class="hidden-pic" id="couplePhoto">
   </div>
-
-  <div class="hearts" id="hearts"></div>
 
   <script>
-    const card = document.getElementById('card');
-    const hiddenMessage = document.getElementById('hiddenMessage');
-    const heartsContainer = document.getElementById('hearts');
+    const knife = document.getElementById('knife');
+    const apple = document.getElementById('apple');
+    const body = document.body;
+    const scene = document.getElementById('scene');
+    const finalScene = document.getElementById('finalScene');
+    const yesButton = document.getElementById('yesButton');
+    const couplePhoto = document.getElementById('couplePhoto');
 
-    function openCard() {
-      document.getElementById('welcome').style.display = 'none';
-      card.style.transform = 'scale(1)';
-      generateHearts();
-    }
+    knife.addEventListener('click', () => {
+      apple.style.transition = 'transform 1s ease';
+      apple.style.transform = 'rotate(90deg) scale(0.5)';
+      setTimeout(() => {
+        body.style.background = "url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fphotos%2Fpicnic.html&psig=AOvVaw2wCNFwpO_Lkw14S2fHTh4W&ust=1738110150378000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMDn2YmTl4sDFQAAAAAdAAAAABAE') no-repeat center center";
+        body.style.backgroundSize = 'cover';
+        scene.style.display = 'none';
+        finalScene.style.display = 'block';
+      }, 1000);
+    });
 
-    function revealMessage() {
-      hiddenMessage.style.display = 'block';
-    }
-
-    function generateHearts() {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-animation';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-        heart.innerHTML = '❤️';
-        heartsContainer.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 5000);
-      }
-    }
+    yesButton.addEventListener('click', () => {
+      yesButton.style.transform = 'scale(2)';
+      setTimeout(() => {
+        couplePhoto.style.display = 'block';
+      }, 500);
+    });
   </script>
 </body>
 </html>
