@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day Card</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #ffe6f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      width: 300px;
+      height: 400px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 20px;
+      transform: scale(0);
+      transition: transform 0.5s ease;
+    }
+
+    .card h1 {
+      color: #ff4d88;
+    }
+
+    .heart {
+      color: #ff4d88;
+      font-size: 50px;
+      animation: bounce 1s infinite alternate;
+    }
+
+    .hidden-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .button {
+      background-color: #ff4d88;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .button:hover {
+      background-color: #ff3366;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .hearts {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .heart-animation {
+      position: absolute;
+      animation: floatUp 4s ease-in infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-300px) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="welcome">
+    <button class="button" onclick="openCard()">Open Your Valentine</button>
+  </div>
+
+  <div class="card" id="card">
+    <h1>Will You Be My Valentine? 💕</h1>
+    <div class="heart">❤️</div>
+    <p class="hidden-message" id="hiddenMessage">I can't wait to spend time with you, even from afar. 💌</p>
+    <button class="button" onclick="revealMessage()">Click to Reveal the Message</button>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    const card = document.getElementById('card');
+    const hiddenMessage = document.getElementById('hiddenMessage');
+    const heartsContainer = document.getElementById('hearts');
+
+    function openCard() {
+      document.getElementById('welcome').style.display = 'none';
+      card.style.transform = 'scale(1)';
+      generateHearts();
+    }
+
+    function revealMessage() {
+      hiddenMessage.style.display = 'block';
+    }
+
+    function generateHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-animation';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.innerHTML = '❤️';
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
